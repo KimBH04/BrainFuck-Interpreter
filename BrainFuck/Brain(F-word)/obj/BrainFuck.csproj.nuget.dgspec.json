@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj": {}
+    "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj": {}
   },
   "projects": {
-    "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj": {
+    "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj",
+        "projectUniqueName": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj",
         "projectName": "BrainFuck",
-        "projectPath": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj",
+        "projectPath": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj",
         "packagesPath": "C:\\Users\\KBH\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\obj\\",
+        "outputPath": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KBH\\AppData\\Roaming\\NuGet\\NuGet.Config",

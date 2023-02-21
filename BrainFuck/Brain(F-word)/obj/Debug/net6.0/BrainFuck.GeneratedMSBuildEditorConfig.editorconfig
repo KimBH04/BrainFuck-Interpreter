@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Brain_F_word_
-build_property.ProjectDir = C:\Users\KBH\Desktop\vs\BrainFuck\Brain(F-word)\
+build_property.ProjectDir = C:\Users\KBH\Documents\GitHub\BrainFuck-Interpreter\BrainFuck\Brain(F-word)\

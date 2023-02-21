@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rWy/nRJWKJFdq6zmskLxAJvjwCNw+TMvNRGMmjyJS8dBtvKkA3AOt7Tt+VCq738WVDPWETXYGE1skoYL27VmDg==",
+  "dgSpecHash": "su0gUCWrehxW3IAM8j1yVjO2AnL0iv5hM6uME2OLLxMSOORzegllPUy3ZuxrsK9ZJ49lIX5xdfO7R7J4V5rDTQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj",
+  "projectFilePath": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

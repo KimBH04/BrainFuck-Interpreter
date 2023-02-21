@@ -39,11 +39,9 @@ Console.WriteLine(c); //output : Who are you??!
 
 //resizing memory 
 brainFuck.Reset();
-var d = brainFuck.RunCode(",.>>>>", "A");
+var d = brainFuck.RunCode(",.>>>>.", "A");
 Console.WriteLine(d);
 
 brainFuck.Reset(4);
 d = brainFuck.RunCode(",.>>>>.", "A"); //memory overflow
 Console.WriteLine(d);
-
-

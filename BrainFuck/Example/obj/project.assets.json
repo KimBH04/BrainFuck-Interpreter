@@ -32,11 +32,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Example\\Example.csproj",
+      "projectUniqueName": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Example\\Example.csproj",
       "projectName": "Example",
-      "projectPath": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Example\\Example.csproj",
+      "projectPath": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Example\\Example.csproj",
       "packagesPath": "C:\\Users\\KBH\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Example\\obj\\",
+      "outputPath": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Example\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KBH\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,8 +53,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj": {
-              "projectPath": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj"
+            "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj": {
+              "projectPath": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Brain(F-word)\\BrainFuck.csproj"
             }
           }
         }

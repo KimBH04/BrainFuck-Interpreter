@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a/3pqFGNE5KgiPPC9mqTcB9xxaB5vL5ifV34oPVCyuqo4dvFT5HZJz/2d+YwQGPZuy2vxj5N7btXrpx79bIlEg==",
+  "dgSpecHash": "eW4Xzu/rruBRJKm9NuKPRzOomUTg9UaovQk2Lly7ZfH1GlZKkA3lOclPhsbB/OJJbjDHAD1FDRpP3oH4MCbiBA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\KBH\\Desktop\\vs\\BrainFuck\\Example\\Example.csproj",
+  "projectFilePath": "C:\\Users\\KBH\\Documents\\GitHub\\BrainFuck-Interpreter\\BrainFuck\\Example\\Example.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

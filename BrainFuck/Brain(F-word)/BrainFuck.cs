@@ -6,7 +6,7 @@
         private int Pointer;
         private long InputPointer;
 
-        public BrainFuckInterpreter(long memorySize)
+        public BrainFuckInterpreter(int memorySize)
         {
             Reset(memorySize);
         }
@@ -16,16 +16,13 @@
             Reset(Memory.Length);
         }
 
-        public void Reset(long memorySize)
+        public void Reset(int memorySize)
         {
             Pointer = 0;
             InputPointer = 0;
             Memory = new byte[memorySize];
 
-            for (int i = 0; i < Memory.Length; i++)
-            {
-                Memory[i] = 0;
-            }
+            Array.Clear(Memory, 0, memorySize);
         }
 
         public string RunCode(string code, string input = "")
@@ -75,11 +72,11 @@
                     switch (code[i])
                     {
                         case '>':
-                            MoveRight();
+                            MovePointer(1);
                             break;
 
                         case '<':
-                            MoveLeft();
+                            MovePointer(-1);
                             break;
 
                         case '+':
@@ -133,17 +130,15 @@
                     }
                 }
 
-                void MoveRight()
+                void MovePointer(int direction)
                 {
-                    if (++Pointer >= Memory.Length)
+                    Pointer += direction;
+
+                    if (Pointer >= Memory.Length)
                     {
                         Pointer = 0;
                     }
-                }
-
-                void MoveLeft()
-                {
-                    if (--Pointer < 0)
+                    else if (Pointer < 0)
                     {
                         Pointer = Memory.Length - 1;
                     }
