@@ -6,15 +6,13 @@
         private int Pointer;
         private long InputPointer;
 
-        public BrainFuckInterpreter(int memorySize)
-        {
-            Reset(memorySize);
-        }
+#pragma warning disable CS8618
+        public BrainFuckInterpreter(int memorySize) => Reset(memorySize);
+#pragma warning restore CS8618
 
-        public void Reset()
-        {
-            Reset(Memory.Length);
-        }
+        public int MemorySize => Memory.Length;
+
+        public void Reset() => Reset(Memory.Length);
 
         public void Reset(int memorySize)
         {

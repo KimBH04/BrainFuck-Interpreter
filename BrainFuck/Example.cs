@@ -33,8 +33,8 @@ catch (Exception e)
 brainFuck.Reset();
 var c = brainFuck.RunCode("[,.]>+++++++[>+++++++++<-]>..<+++++[>------<-]>.", "Who are you");
 Console.WriteLine(c); //output : Who are you??!
-//If the number of characters to import is longer than the length of the input string,
-//all subsequent poritions are null (it's 0 in byte).
+//If the number of characters to import is greater than the length of the input string,
+//all subsequent portions will be null (represented as 0 in bytes).
 
 
 //resizing memory 
