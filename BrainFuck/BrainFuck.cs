@@ -1,4 +1,4 @@
-﻿namespace BrainFuck
+namespace BrainFuck
 {
     public class BrainFuckInterpreter
     {
@@ -23,47 +23,53 @@
             Array.Clear(Memory, 0, memorySize);
         }
 
-        public string RunCode(string code, string input = "")
+        public string RunCode(string code, string input = "") => RunCode(code, input.ToCharArray());
+        public string RunCode(string code, char[] input)
         {
+            BracketsMatchCheck();
+            void BracketsMatchCheck()
+            {
+                List<int> brackets = new();
+                for (int i = 0; i < code.Length; i++)
+                {
+                    if (code[i].Equals('['))
+                    {
+                        brackets.Add(i);
+                    }
+                    else if (code[i].Equals(']'))
+                    {
+                        if (brackets.Count > 0)
+                        {
+                            brackets.RemoveAt(brackets.Count - 1);
+                        }
+                        else
+                        {
+                            brackets.Add(i);
+                            break;
+                        }
+                    }
+                }
+
+                if (brackets.Count > 0)
+                {
+                    string invalidBracketPointer = "";
+                    int invalidBracketIdx = brackets[^1];
+
+                    for (int i = 0; i < invalidBracketIdx; i++)
+                    {
+                        invalidBracketPointer += " ";
+                    }
+
+                    throw new BracketsDoNotMatchException(
+                        $"Brackets do not match at : {invalidBracketIdx}" +
+                        $"\r\n{code}" +
+                        $"\r\n{invalidBracketPointer}^~~~");
+                }
+            }
+
             string output = "";
-
-            int invalidBracketIdx = 0;
-            int brackets = 0;
-            for (int i = 0; i < code.Length; i++)
-            {
-                if (code[i].Equals('['))
-                {
-                    invalidBracketIdx = i;
-                    brackets++;
-                }
-                else if (code[i].Equals(']'))
-                    brackets--;
-
-                if (brackets < 0)
-                {
-                    invalidBracketIdx = i;
-                    break;
-                }
-            }
-
-            if (brackets != 0)
-            {
-                string invalidBracketPointer = "";
-
-                for (int i = 0; i < invalidBracketIdx; i++)
-                {
-                    invalidBracketPointer += " ";
-                }
-
-                throw new BracketsDoNotMatchException(
-                    $"Brackets do not match at : {invalidBracketIdx}" +
-                    $"\r\n{code}" +
-                    $"\r\n{invalidBracketPointer}^~~~");
-            }
-
-            Interpreter(input.ToCharArray(), code.ToCharArray());
-
-            void Interpreter(char[] input, char[] code)
+            Interpreter(code.ToCharArray());
+            void Interpreter(char[] code)
             {
                 for (int i = 0; i < code.Length; i++)
                 {
@@ -107,7 +113,7 @@
                                 {
                                     if (repeatCnt == 0)
                                     {
-                                        Interpreter(input, repeatition.ToCharArray());
+                                        Interpreter(repeatition.ToCharArray());
                                         break;
                                     }
                                     else
