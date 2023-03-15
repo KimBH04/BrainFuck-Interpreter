@@ -100,24 +100,35 @@ namespace BrainFuck
                             break;
 
                         case '[':
-                            string repeatition = "";
+                            var isNotZero = Memory[Pointer] > 0;
                             int repeatCnt = 0;
-
-                            foreach (var c in code[(i + 1)..])
+                            string repeatition = "[";
+                            foreach (char c in code[++i..])
                             {
-                                repeatition += c;
+                                if (isNotZero)
+                                {
+                                    repeatition += c;
+                                }
 
                                 if (c.Equals('['))
+                                {
                                     repeatCnt++;
+                                }
                                 else if (c.Equals(']'))
                                 {
                                     if (repeatCnt == 0)
                                     {
-                                        Interpreter(repeatition.ToCharArray());
+                                        if (isNotZero)
+                                        {
+                                            repeatition += ']';
+                                            Interpreter(repeatition.ToCharArray());
+                                        }
                                         break;
                                     }
                                     else
+                                    {
                                         repeatCnt--;
+                                    }
                                 }
 
                                 i++;
@@ -125,8 +136,7 @@ namespace BrainFuck
                             break;
 
                         case ']':
-                            if (Memory[Pointer] != 0)
-                                i = -1;
+                            i = -1;
                             break;
 
                         default:
