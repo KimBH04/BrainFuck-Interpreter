@@ -4,7 +4,6 @@ namespace BrainFuck
     {
         private byte[] Memory;
         private int Pointer;
-        private long InputPointer;
 
 #pragma warning disable CS8618
         public BrainFuckInterpreter(int memorySize) => Reset(memorySize);
@@ -17,145 +16,120 @@ namespace BrainFuck
         public void Reset(int memorySize)
         {
             Pointer = 0;
-            InputPointer = 0;
             Memory = new byte[memorySize];
 
             Array.Clear(Memory, 0, memorySize);
         }
 
-        public string RunCode(string code, string input = "") => RunCode(code, input.ToCharArray());
-        public string RunCode(string code, char[] input)
+        public string RunCode(string code, string input = "")
         {
-            BracketsMatchCheck();
-            void BracketsMatchCheck()
+            int codeLen = code.Length;
+            int[] matchingBrackets = new int[codeLen];
+
+            Queue<byte> inputStr = new();
+            foreach (byte c in input.Select(v => (byte)v))
             {
-                List<int> brackets = new();
-                for (int i = 0; i < code.Length; i++)
+                inputStr.Enqueue(c);
+            }
+
+            Stack<int> brackets = new();
+            for (int i = 0; i < codeLen; i++)
+            {
+                if (code[i].Equals('['))
                 {
-                    if (code[i].Equals('['))
-                    {
-                        brackets.Add(i);
-                    }
-                    else if (code[i].Equals(']'))
-                    {
-                        if (brackets.Count > 0)
-                        {
-                            brackets.RemoveAt(brackets.Count - 1);
-                        }
-                        else
-                        {
-                            brackets.Add(i);
-                            break;
-                        }
-                    }
+                    brackets.Push(i);
                 }
-
-                if (brackets.Count > 0)
+                else if (code[i].Equals(']'))
                 {
-                    string invalidBracketPointer = "";
-                    int invalidBracketIdx = brackets[^1];
-
-                    for (int i = 0; i < invalidBracketIdx; i++)
+                    if (brackets.Count > 0)
                     {
-                        invalidBracketPointer += " ";
+                        int idx = brackets.Pop();
+                        matchingBrackets[i] = idx;
+                        matchingBrackets[idx] = i;
                     }
-
-                    throw new BracketsDoNotMatchException(
-                        $"Brackets do not match at : {invalidBracketIdx}" +
-                        $"\r\n{code}" +
-                        $"\r\n{invalidBracketPointer}^~~~");
+                    else
+                    {
+                        brackets.Push(i);
+                        break;
+                    }
                 }
             }
 
-            string output = "";
-            Interpreter(code.ToCharArray());
-            void Interpreter(char[] code)
+            if (brackets.Count > 0)
             {
-                for (int i = 0; i < code.Length; i++)
+                string invalidBracketPointer = "";
+                int invalidBracketIdx = brackets.Pop();
+
+                for (int i = 0; i < invalidBracketIdx; i++)
                 {
-                    switch (code[i])
-                    {
-                        case '>':
-                            MovePointer(1);
-                            break;
-
-                        case '<':
-                            MovePointer(-1);
-                            break;
-
-                        case '+':
-                            Memory[Pointer] += 1;
-                            break;
-
-                        case '-':
-                            Memory[Pointer] -= 1;
-                            break;
-
-                        case '.':
-                            output += (char)Memory[Pointer];
-                            break;
-
-                        case ',':
-                            Memory[Pointer] = InputPointer >= input.Length ? (byte)0 : (byte)input[InputPointer++];
-                            break;
-
-                        case '[':
-                            var isNotZero = Memory[Pointer] > 0;
-                            int repeatCnt = 0;
-                            string repeatition = "[";
-                            foreach (char c in code[++i..])
-                            {
-                                if (isNotZero)
-                                {
-                                    repeatition += c;
-                                }
-
-                                if (c.Equals('['))
-                                {
-                                    repeatCnt++;
-                                }
-                                else if (c.Equals(']'))
-                                {
-                                    if (repeatCnt == 0)
-                                    {
-                                        if (isNotZero)
-                                        {
-                                            repeatition += ']';
-                                            Interpreter(repeatition.ToCharArray());
-                                        }
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        repeatCnt--;
-                                    }
-                                }
-
-                                i++;
-                            }
-                            break;
-
-                        case ']':
-                            i = -1;
-                            break;
-
-                        default:
-                            break;
-                    }
+                    invalidBracketPointer += " ";
                 }
 
-                void MovePointer(int direction)
-                {
-                    Pointer += direction;
+                throw new NoBracketCorrespondingException(
+                    $"No brackets corresponding to : {invalidBracketIdx}" +
+                    $"\r\n{code}" +
+                    $"\r\n{invalidBracketPointer}^~~~");
+            }
 
-                    if (Pointer >= Memory.Length)
-                    {
-                        Pointer = 0;
-                    }
-                    else if (Pointer < 0)
-                    {
-                        Pointer = Memory.Length - 1;
-                    }
+            string output = "";
+            for (int i = 0; i < codeLen; i++)
+            {
+                switch (code[i])
+                {
+                    case '>':
+                        MovePointer(1);
+                        break;
+
+                    case '<':
+                        MovePointer(-1);
+                        break;
+
+                    case '+':
+                        Memory[Pointer]++;
+                        break;
+
+                    case '-':
+                        Memory[Pointer]--;
+                        break;
+
+                    case '.':
+                        output += (char)Memory[Pointer];
+                        break;
+
+                    case ',':
+                        Memory[Pointer] = inputStr.Dequeue();
+                        break;
+
+                    case '[':
+                        if (Memory[Pointer] == 0)
+                        {
+                            i = matchingBrackets[i];
+                        }
+                        break;
+
+                    case ']':
+                        if (Memory[Pointer] != 0)
+                        {
+                            i = matchingBrackets[i];
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            void MovePointer(int direction)
+            {
+                Pointer += direction;
+
+                if (Pointer >= Memory.Length)
+                {
+                    Pointer = 0;
+                }
+                else if (Pointer < 0)
+                {
+                    Pointer = Memory.Length - 1;
                 }
             }
 
@@ -163,23 +137,10 @@ namespace BrainFuck
         }
     }
 
-    public class BracketsDoNotMatchException : Exception
+    public class NoBracketCorrespondingException : Exception
     {
-        public BracketsDoNotMatchException()
-        {
-
-        }
-
-        public BracketsDoNotMatchException(string massage)
-            : base(massage)
-        {
-
-        }
-
-        public BracketsDoNotMatchException(string massage, Exception inner)
-            : base(massage, inner)
-        {
-
-        }
+        public NoBracketCorrespondingException() { }
+        public NoBracketCorrespondingException(string massage) : base(massage) { }
+        public NoBracketCorrespondingException(string massage, Exception inner) : base(massage, inner) { }
     }
 }
