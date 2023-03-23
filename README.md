@@ -1,4 +1,6 @@
 # BrainFuck-Interpreter
+## What is BrainFuck?
+BrainFuck is an esoteric programming language created by Urban Müller
 ## BrainFuck Syntax
 ```
 + : increment at pointer. if pointer's value is 255, become 0
