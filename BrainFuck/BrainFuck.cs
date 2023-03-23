@@ -1,27 +1,26 @@
-//So many bugs
-//Real fukking my brain lol
-
 namespace BrainFuck
 {
+    using System.Text;
+
     public class BrainFuckInterpreter
     {
-        private byte[] Memory;
+        private byte[] Cell;
         private int Pointer;
 
 #pragma warning disable CS8618
         public BrainFuckInterpreter(int memorySize) => Reset(memorySize);
 #pragma warning restore CS8618
 
-        public int MemorySize => Memory.Length;
+        public int CellSize => Cell.Length;
 
-        public void Reset() => Reset(Memory.Length);
+        public void Reset() => Reset(Cell.Length);
 
         public void Reset(int memorySize)
         {
             Pointer = 0;
-            Memory = new byte[memorySize];
+            Cell = new byte[memorySize];
 
-            Array.Clear(Memory, 0, memorySize);
+            Array.Clear(Cell, 0, memorySize);
         }
 
         public string RunCode(string code, string input = "")
@@ -46,32 +45,43 @@ namespace BrainFuck
                 {
                     if (brackets.Count > 0)
                     {
-                        int idx = brackets.Pop();
-                        matchingBrackets[i] = idx;
-                        matchingBrackets[idx] = i;
+                        if (!brackets.Peek().Equals(']'))
+                        {
+                            int idx = brackets.Pop();
+                            matchingBrackets[i] = idx;
+                            matchingBrackets[idx] = i;
+                            continue;
+                        }
                     }
-                    else
-                    {
-                        brackets.Push(i);
-                        break;
-                    }
+                    
+                    brackets.Push(i);
                 }
             }
 
             if (brackets.Count > 0)
             {
-                string invalidBracketPointer = "";
-                int invalidBracketIdx = brackets.Pop();
+                StringBuilder exceptionMessage = new();
+                exceptionMessage.AppendLine();
 
-                for (int i = 0; i < invalidBracketIdx; i++)
+                while (brackets.Count > 0)
                 {
-                    invalidBracketPointer += " ";
+                    exceptionMessage.AppendLine();
+
+                    string invalidBracketPointer = "";
+                    int invalidBracketIdx = brackets.Pop();
+
+                    for (int i = 0; i < invalidBracketIdx; i++)
+                    {
+                        invalidBracketPointer += " ";
+                    }
+
+                    exceptionMessage.AppendLine(
+                        $"No brackets corresponding to : {invalidBracketIdx}" +
+                        $"\r\n{code}" +
+                        $"\r\n{invalidBracketPointer}^~~~");
                 }
 
-                throw new NoBracketCorrespondingException(
-                    $"No brackets corresponding to : {invalidBracketIdx}" +
-                    $"\r\n{code}" +
-                    $"\r\n{invalidBracketPointer}^~~~");
+                throw new NoBracketCorrespondingException(exceptionMessage.ToString());
             }
 
             string output = "";
@@ -88,30 +98,31 @@ namespace BrainFuck
                         break;
 
                     case '+':
-                        Memory[Pointer]++;
+                        Cell[Pointer]++;
                         break;
 
                     case '-':
-                        Memory[Pointer]--;
+                        Cell[Pointer]--;
                         break;
 
                     case '.':
-                        output += (char)Memory[Pointer];
+                        output += (char)Cell[Pointer];
                         break;
 
                     case ',':
-                        Memory[Pointer] = inputStr.Dequeue();
+                        Cell[Pointer] = inputStr.Dequeue();
                         break;
 
+
                     case '[':
-                        if (Memory[Pointer] == 0)
+                        if (Cell[Pointer] == 0)
                         {
                             i = matchingBrackets[i];
                         }
                         break;
 
                     case ']':
-                        if (Memory[Pointer] != 0)
+                        if (Cell[Pointer] != 0)
                         {
                             i = matchingBrackets[i];
                         }
@@ -126,13 +137,13 @@ namespace BrainFuck
             {
                 Pointer += direction;
 
-                if (Pointer >= Memory.Length)
+                if (Pointer >= Cell.Length)
                 {
                     Pointer = 0;
                 }
                 else if (Pointer < 0)
                 {
-                    Pointer = Memory.Length - 1;
+                    Pointer = Cell.Length - 1;
                 }
             }
 
