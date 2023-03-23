@@ -110,7 +110,8 @@ namespace BrainFuck
                         break;
 
                     case ',':
-                        Cell[Pointer] = inputStr.Dequeue();
+                        byte zero = 0;
+                        Cell[Pointer] = inputStr.Count > 0 ? inputStr.Dequeue() : zero;
                         break;
 
 
