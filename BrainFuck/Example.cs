@@ -1,4 +1,4 @@
-﻿using BrainFuck;
+using BrainFuck;
 
 var memory = int.Parse(Console.ReadLine()!);
 var brainFuck = new BrainFuckInterpreter(memory);
@@ -31,7 +31,7 @@ catch (Exception e)
 
 //input
 brainFuck.Reset();
-var c = brainFuck.RunCode("[,.]>+++++++[>+++++++++<-]>..<+++++[>------<-]>.", "Who are you");
+var c = brainFuck.RunCode("+[,.]>+++++++[>+++++++++<-]>..<+++++[>------<-]>.", "Who are you");
 Console.WriteLine(c); //output : Who are you??!
 //If the number of characters to import is greater than the length of the input string,
 //all subsequent portions will be null (represented as 0 in bytes).
