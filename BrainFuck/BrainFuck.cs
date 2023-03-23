@@ -1,3 +1,6 @@
+//So many bugs
+//Real fukking my brain lol
+
 namespace BrainFuck
 {
     public class BrainFuckInterpreter
