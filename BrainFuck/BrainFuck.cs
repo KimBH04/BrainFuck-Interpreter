@@ -1,7 +1,6 @@
+//C# 8.0 or later
 namespace BrainFuck
 {
-    using System.Text;
-
     public class BrainFuckInterpreter
     {
         private byte[] Cell;
@@ -27,12 +26,6 @@ namespace BrainFuck
         {
             int codeLen = code.Length;
             int[] matchingBrackets = new int[codeLen];
-
-            Queue<byte> inputStr = new();
-            foreach (byte c in input.Select(v => (byte)v))
-            {
-                inputStr.Enqueue(c);
-            }
 
             Stack<int> brackets = new();
             for (int i = 0; i < codeLen; i++)
@@ -60,13 +53,10 @@ namespace BrainFuck
 
             if (brackets.Count > 0)
             {
-                StringBuilder exceptionMessage = new();
-                exceptionMessage.AppendLine();
+                System.Text.StringBuilder exceptionMessage = new();
 
                 while (brackets.Count > 0)
                 {
-                    exceptionMessage.AppendLine();
-
                     string invalidBracketPointer = "";
                     int invalidBracketIdx = brackets.Pop();
 
@@ -76,7 +66,7 @@ namespace BrainFuck
                     }
 
                     exceptionMessage.AppendLine(
-                        $"No brackets corresponding to : {invalidBracketIdx}" +
+                        $"\r\nNo brackets corresponding to : {invalidBracketIdx}" +
                         $"\r\n{code}" +
                         $"\r\n{invalidBracketPointer}^~~~");
                 }
@@ -110,8 +100,15 @@ namespace BrainFuck
                         break;
 
                     case ',':
-                        byte zero = 0;
-                        Cell[Pointer] = inputStr.Count > 0 ? inputStr.Dequeue() : zero;
+                        if (input.Length > 0)
+                        {
+                            Cell[Pointer] = (byte)input[0];
+                            input = input[1..];
+                        }
+                        else
+                        {
+                            Cell[Pointer] = 0;
+                        }
                         break;
 
 
@@ -134,28 +131,28 @@ namespace BrainFuck
                 }
             }
 
-            void MovePointer(int direction)
-            {
-                Pointer += direction;
-
-                if (Pointer >= Cell.Length)
-                {
-                    Pointer = 0;
-                }
-                else if (Pointer < 0)
-                {
-                    Pointer = Cell.Length - 1;
-                }
-            }
-
             return output;
+        }
+
+        void MovePointer(int direction)
+        {
+            Pointer += direction;
+
+            if (Pointer >= Cell.Length)
+            {
+                Pointer = 0;
+            }
+            else if (Pointer < 0)
+            {
+                Pointer = Cell.Length - 1;
+            }
         }
     }
 
     public class NoBracketCorrespondingException : Exception
     {
         public NoBracketCorrespondingException() { }
-        public NoBracketCorrespondingException(string massage) : base(massage) { }
-        public NoBracketCorrespondingException(string massage, Exception inner) : base(massage, inner) { }
+        public NoBracketCorrespondingException(string message) : base(message) { }
+        public NoBracketCorrespondingException(string message, Exception inner) : base(message, inner) { }
     }
 }
