@@ -46,7 +46,7 @@ namespace BrainFuck
                             continue;
                         }
                     }
-                    
+
                     brackets.Push(i);
                 }
             }
@@ -55,10 +55,9 @@ namespace BrainFuck
             {
                 System.Text.StringBuilder exceptionMessage = new();
 
-                while (brackets.Count > 0)
+                foreach (int invalidBracketIdx in brackets.Reverse())
                 {
                     string invalidBracketPointer = "";
-                    int invalidBracketIdx = brackets.Pop();
 
                     for (int i = 0; i < invalidBracketIdx; i++)
                     {
@@ -111,7 +110,6 @@ namespace BrainFuck
                         }
                         break;
 
-
                     case '[':
                         if (Cell[Pointer] == 0)
                         {
@@ -134,7 +132,7 @@ namespace BrainFuck
             return output;
         }
 
-        void MovePointer(int direction)
+        private void MovePointer(int direction)
         {
             Pointer += direction;
 
