@@ -40,7 +40,7 @@ namespace BrainFuck
                 {
                     if (brackets.Count > 0)
                     {
-                        if (!brackets.Peek().Equals(']'))
+                        if (code[brackets.Peek()].Equals('['))
                         {
                             int idx = brackets.Pop();
                             matchingBrackets[i] = idx;
